@@ -65,7 +65,7 @@ class RegressionCC:
 
     def _get_global_min_mse(self: Self, rgb_poly: npt.NDArray[np.float64],
                         xyz: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
-        return np.linalg.inv(rgb_poly.T @ rgb_poly) @ rgb_poly.T @ xyz
+        return np.linalg.pinv(rgb_poly.T @ rgb_poly) @ rgb_poly.T @ xyz
 
     def _fit_mse(self: Self, rgb: npt.NDArray[np.float64],
                     xyz: npt.NDArray[np.float64],

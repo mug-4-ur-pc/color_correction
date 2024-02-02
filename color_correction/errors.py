@@ -1,10 +1,17 @@
 import numpy as np
+import numpy.typing as npt
 import torch
 
 from color_correction.convert import XYZ_to_LAB
 
 
-def CIELABDE(xyz1, xyz2, white_point, use_torch = False):
+ArrayOrTensor = npt.NDArray[np.float64] | torch.Tensor
+
+
+def CIELABDE(xyz1: ArrayOrTensor,
+             xyz2: ArrayOrTensor,
+             white_point: ArrayOrTensor,
+             use_torch: bool = False) -> ArrayOrTensor:
     am = torch if use_torch else np
 
     lab1 = XYZ_to_LAB(xyz1, white_point, use_torch)
@@ -13,7 +20,10 @@ def CIELABDE(xyz1, xyz2, white_point, use_torch = False):
     return am.sqrt(((lab2 - lab1) * (lab2 - lab1)).sum(axis=1))
 
 
-def CIEDE2000(xyz1, xyz2, white_point, use_torch = False):
+def CIEDE2000(xyz1: ArrayOrTensor,
+              xyz2: ArrayOrTensor,
+              white_point: ArrayOrTensor,
+              use_torch: bool = False) -> ArrayOrTensor:
     am = torch if use_torch else np
 
     lab1 = XYZ_to_LAB(xyz1, white_point, use_torch)
